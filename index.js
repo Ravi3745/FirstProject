@@ -1,8 +1,7 @@
 const express= require('express');
 const app=express();
 const port=5000;
-
-app.use('/',require('./routes'));
+app.set('view engine','view');
 
 app.listen(port,function(error){
     if(error){

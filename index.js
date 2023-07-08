@@ -1,8 +1,12 @@
 const express= require('express');
 const app=express();
 const port=5000;
-app.set('view engine','view');
-app.set('views','./views');
+app.set('view engine','ejs');
+app.set('views','./views')
+
+
+
+app.use('/',require('./routes'));
 
 app.listen(port,function(error){
     if(error){

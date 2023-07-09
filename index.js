@@ -4,6 +4,13 @@ const app=express();
 const port=5000;
 const path=require('path');
 const db=require('./config/mongoose');
+const cookie=require('cookie-parser');
+
+
+app.use(express.urlencoded());
+app.use(cookie());
+
+
 // this one is for setting up view engine 
 app.set('view engine','ejs');
 app.set('views','./views')
@@ -33,9 +40,10 @@ app.get('/assets/css/home.css', function(req, res) {
 
 // this one is for setting up layouts
 const expressLayouts=require('express-ejs-layouts');
+const { urlencoded } = require('express');
 app.use(expressLayouts);
 
-// this one is for including style ans script of individual pages
+// this one is for including style and script of individual pages
 
 app.set('layout extractStyles',true);
 app.set('layout extractScripts',true);

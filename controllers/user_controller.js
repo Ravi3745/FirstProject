@@ -1,7 +1,26 @@
 const User=require("../models/user");
 
-module.exports.profile=function(res,res){
-    return res.end('<h1> users profile</h1>');
+module.exports.profile= async function(req,res){
+   if(req.cookies.user_id){
+    
+    try{
+        const user= await User.findById(req.cookies.user_id).exec();
+        if(user){
+            return res.render('profile',{
+                name:user.name,
+                email:user.email
+            });
+        }else{
+            return res.redirect('/user/sign-in');
+        }
+    }catch(error){
+         return res.redirect('/user/sign-in');
+    }
+
+
+   }else{
+    return res.redirect('/user/sign-in');
+   }
 }
 
 // render the sign up page
@@ -61,6 +80,26 @@ module.exports.create= async function(req,res){
 
 // creating session for user while login
 
-module.exports.createSession=function(req,res){
+module.exports.createSession= async function(req,res){
 
+
+
+try{
+    const user= await User.findOne({email:req.body.email}).exec();
+
+    if(user){
+        if(user.password!=req.body.password){
+            return res.redirect('back');
+        }
+
+        res.cookie('user_id',user.id);
+        return res.redirect('/user/profile');
+
+    }else{
+        res.redirect('back');
+    }
+
+    }catch(erro){
+        console.log("error in sign in user")
+    }
 }

@@ -1,17 +1,25 @@
 const User=require("../models/user");
 
 module.exports.profile=function(res,res){
-    return res.end('<h1> users profile</h1>');
+    return res.render('profile.ejs');
 }
 
 // render the sign up page
 module.exports.signUp=function(req,res){
-   return res.render('user_sign_up.ejs',{
+    if(req.isAuthenticated()){
+        return res.redirect('/user/profile');
+    }
+  
+    return res.render('user_sign_up.ejs',{
     title:"Codeial | SignUp"
    });
 }
 //render the sign in page
 module.exports.signIn=function(req,res){
+    if(req.isAuthenticated()){
+        return res.redirect('/user/profile');
+    }
+  
     return res.render('user_sign_in.ejs',{
         title:"Codeial | SignIn"
     });
@@ -39,28 +47,20 @@ module.exports.create= async function(req,res){
         console.log("Error in finding or creating user:", error);
         return res.redirect('back');
     }
-    
-    
-
-    // User.findOne({email:req.body.email},function(error,user){
-    //     if(error){console.log("error in finding user for sign up"); return}
-
-    //     if(!user){
-    //         User.create(req.body,function(err,user){
-    //             if(err){console.log("error while signinh up user"); return}
-
-    //         return res.redirect('/user/sign-in');
-    //         })
-    //     }else{
-    //         return res.redirect('back');
-    //     }
-
-    // });
 }
 
 
 // creating session for user while login
 
 module.exports.createSession=function(req,res){
+    return res.redirect('/');
+}
 
+// tp log out session
+module.exports.destroySession=function(req,res){
+    
+    req.logout(function(err) {
+        if (err) { return next(err); }
+       return res.redirect('/');
+      });
 }

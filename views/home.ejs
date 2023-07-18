@@ -1,5 +1,28 @@
-    <link rel="stylesheet"  href="../assets/css/home.css" type="text/css">
+<link rel="stylesheet"  href="../assets/css/home.css" type="text/css">
 
-    <h1>Welcome!<%=title%></h1>
+<h1>Welcome!<%=title%></h1>
+
+<section id="feed-posts">
+    <h4>Posts</h4>
+    <form action="/posts/create" id="new-post-form" method="post">
+        <textarea name="content" id="" cols="30" rows="3"></textarea>
+        <input type="submit" value="Post">
+    </form>
+</section>
+
+
+<div id="post-container">
+    <ul>
+
+        <%for(post of posts){%>
+            <li>
+                <%=post.content%>
+                <small>
+                    <%=post.user.name%>
+                </small>
+            </li>
+        <%}%>
+    </ul>
+</div>
 
   

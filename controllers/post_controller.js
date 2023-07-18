@@ -1,3 +1,29 @@
-module.exports.post=function(req,res){
-    return res.end('<h1>you are seeing the post</h1>');
+const Post=require('../models/post');
+const { post } = require('../routes');
+
+// module.exports.create=function(req,res){
+//     Post.create({
+//         content:req.body.content,
+//         user:req.user._id
+//     },function(err,post){
+//         if(err){
+//             console.log('errorin creating post');
+//             return;
+//         }else{
+//             return res.redirect('back');
+//         }
+//     })
+// }
+
+module.exports.create= async function(req,res){
+    try{
+        Post.create({
+            content:req.body.content,
+            user:req.user._id
+        });
+        return res.redirect('back');
+    }catch(err){
+        console.log("error in creating post");
+        return;
+    }
 }

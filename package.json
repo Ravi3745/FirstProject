@@ -21,6 +21,7 @@
     "express-ejs-layouts": "^2.5.1",
     "express-session": "^1.17.3",
     "middleware": "^1.0.0",
+    "mime": "^3.0.0",
     "mongoose": "^7.3.2",
     "node": "^20.4.0",
     "node-sass-middleware": "^1.0.1",

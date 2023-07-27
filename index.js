@@ -15,6 +15,10 @@ const passportLocal=require('./config/passport')
 const MongoStore = require("connect-mongodb-session")(session);
 // const MongoStore= require('connect-mongo')(session);
 const sassMiddleware=require('node-sass-middleware');
+// for flash messsages
+const flash = require('connect-flash');
+const customMware = require('./config/middleware');
+
 
 app.use(
     sassMiddleware({
@@ -60,59 +64,14 @@ app.use(passport.initialize());
 app.use(passport.session());
 // app.use(passport.checkAuthentication());
 app.use(passport.setAuthenticatedUser);
-// for using static files css images js 
-app.use(express.static(path.join(__dirname, 'assets'), {
-    setHeaders: (res, filePath) => {
-      if (mime.getType(filePath) === 'text/css') {
-        res.setHeader('Content-Type', 'text/css');
-      }
-    },
-  }));
-  // app.get('/assets/css/*', function (req, res) {
-  //   res.setHeader('Content-Type', 'text/css');
-  //   res.sendFile(path.join(__dirname, req.path));
-  // });
-  
+
+// for flash messages
+app.use(flash());
+app.use(customMware.setFlash);
   
 app.use(express.static('./assets')); 
-// this is not working in my case due to mime type so have to use use other way of routing
-
-// app.get('/assets/css/layout.css',function(req,res){
-//     res.set('Content-type','text/css');
-//     res.sendFile(path.join(__dirname,'assets','css','layout.css'));
-// });
-// app.get('/assets/css/_header.css',function(req,res){
-//     res.set('Content-type','text/css');
-//     res.sendFile(path.join(__dirname,'assets','css','_header.css'));
-// });
-
-// app.get('/assets/css/_footer.css',function(req,res){
-//     res.set('Content-type','text/css');
-//     res.sendFile(path.join(__dirname,'assets','css','_footer.css'));
-// });
-// app.get('/assets/css/profile.css',function(req,res){
-//     res.set('Content-type','text/css');
-//     res.sendFile(path.join(__dirname,'assets','css','profile.css'));
-// });
 
 
-
-
-// similarily i have to do the same for js file and image file
-
-// app.get('/assets/js/layout.js',function(req,res){
-//     res.set('Content-type','text/javascript');
-//     res.sendFile(path.join(__dirname,'assets','js','layout.js'));
-
-// })
-// // i dont know what is going on this mim type issue because of this i have to include every thing here
-// app.get('/assets/css/home.css', function(req, res) {
-//     res.type('text/css');
-//     res.sendFile(path.join(__dirname, 'assets', 'css', 'home.css'));
-//   });
-
-
-// this one is for setting up layouts
 const expressLayouts=require('express-ejs-layouts');
 const { urlencoded } = require('express');
 const { debug } = require('console');

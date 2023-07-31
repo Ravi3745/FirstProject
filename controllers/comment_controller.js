@@ -1,5 +1,6 @@
 const Comment=require('../models/comment');
 const Post=require('../models/post');
+const User=require('../models/user');
 
 module.exports.create = async function (req, res) {
     try {
@@ -18,12 +19,15 @@ module.exports.create = async function (req, res) {
       if (req.xhr){
         // Similar for comments to fetch the user's id!
         // comment = await comment.populate('user', 'name').execPopulate();
+        const user = await User.findById(req.user._id, 'name');
 
+        // Add the user name to the post object
+        comment.user = user;
         return res.status(200).json({
             data: {
                 comment: comment
             },
-            message: "Post created!"
+            message: "comment created!"
         });
         }
         req.flash('success', 'Comment published!');

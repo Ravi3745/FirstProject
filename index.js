@@ -11,7 +11,8 @@ const cookie=require('cookie-parser');
 // passport library
 const session=require('express-session');
 const passport=require('passport');
-const passportLocal=require('./config/passport')
+const passportLocal=require('./config/passport');
+const passportJWT=require('./config/passport-jwt');
 const MongoStore = require("connect-mongodb-session")(session);
 // const MongoStore= require('connect-mongo')(session);
 const sassMiddleware=require('node-sass-middleware');
@@ -70,7 +71,8 @@ app.use(flash());
 app.use(customMware.setFlash);
   
 app.use(express.static('./assets')); 
-
+// make upaoad folder availble to the browser
+app.use('/uploads',express.static(__dirname+'/uploads'));
 
 const expressLayouts=require('express-ejs-layouts');
 const { urlencoded } = require('express');

@@ -2,6 +2,7 @@ const Post=require('../models/post');
 const { post } = require('../routes');
 const Comment=require('../models/comment');
 const User=require('../models/user');
+const Like = require('../models/like');
 module.exports.create= async function(req,res){
     try{
        const post= await Post.create({
@@ -47,6 +48,12 @@ module.exports.destroy=async function(req,res){
         // .id means converting the object id into String
         
         if (post && post.user.toString() === req.user.id){
+
+            // delete the associated likes for the post and all its comments' likes too
+            await Like.deleteMany({likeable: post, onModel: 'Post'});
+            await Like.deleteMany({_id: {$in: post.comments}});
+
+
             await post.deleteOne();
             await Comment.deleteMany({post: req.params.id});
             if(req.xhr){

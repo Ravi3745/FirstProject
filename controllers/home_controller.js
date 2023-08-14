@@ -4,15 +4,34 @@ const User=require('../models/user');
 module.exports.home=async function(req,res){
    try{
      let posts= await Post.find({})
-     .sort('-createdAt')
-     .populate('user')
+     .sort("-createdAt")
+     .populate("user")
      .populate({
-         path:'comments',
-         populate:{
-            path:'user'
-         }
+       path: "comments",
+       populate: {
+         path: "user",
+       },
      })
-     .exec();
+     .populate({
+       path: "comments",
+       populate: {
+         path: "likes",
+       },
+     })
+     .populate("likes");
+   //   .sort('-createdAt')
+   //   .populate('user')
+   //   .populate({
+   //       path:'comments',
+   //       populate:{
+   //          path:'user'
+   //       },
+   //       populate: {
+   //          path: 'likes'
+   //      }
+   //   }).populate('comments')
+   //   .populate('likes');
+     
      let user=await User.find({});
 
       return res.render('home',{

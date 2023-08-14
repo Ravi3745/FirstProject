@@ -1,4 +1,5 @@
 <link rel="stylesheet"  href="/css/home.css" type="text/css">
+<link rel="stylesheet" href="/css/chat_box.css" type="text/css">
 
 <h1>Welcome!<%=title%></h1>
 
@@ -31,9 +32,17 @@
         <%}%>
     </section>
 
-
+    <%- include('_chat-box') -%>
 
 </div>
 
 <script src="/js/home_comment.js"></script>
 <script src="/js/home_post.js" ></script>
+
+<script src="js/toggle_likes.js"></script>
+<script>
+    $('.toggle-like-button').each(function(){
+        let self = this;
+        let toggleLike = new ToggleLike(self);
+    });
+</script>

@@ -13,6 +13,7 @@ const session=require('express-session');
 const passport=require('passport');
 const passportLocal=require('./config/passport');
 const passportJWT=require('./config/passport-jwt');
+const passportGoogle=require('./config/passpoert-google-oauth');
 const MongoStore = require("connect-mongodb-session")(session);
 // const MongoStore= require('connect-mongo')(session);
 const sassMiddleware=require('node-sass-middleware');
@@ -20,6 +21,7 @@ const sassMiddleware=require('node-sass-middleware');
 const flash = require('connect-flash');
 const customMware = require('./config/middleware');
 
+const nodemailer = require("nodemailer");
 
 app.use(
     sassMiddleware({

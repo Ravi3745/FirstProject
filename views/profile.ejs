@@ -1,5 +1,11 @@
 
-<img src="<%=profile_user.avatar%>" alt="<%=user.name%>" style="width:100px; height: 100px;">
+<% if (profile_user.avatar) { %>
+    <img src="<%= profile_user.avatar %>" alt="<%= user.name %>" style="width: 100px; height: 100px;">
+  <% } else { %>
+    <!-- Provide a default image URL here -->
+    <img src="/images/man_318-677829.avif" alt="<%= user.name %>" style="width: 100px; height: 100px;">
+  <% } %>
+  
 
 <%if(user.id==profile_user.id){%>
     <form action="/user/update/<%=profile_user.id%>" enctype="multipart/form-data" method="post">

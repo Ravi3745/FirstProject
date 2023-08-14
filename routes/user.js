@@ -19,7 +19,7 @@ route.post('/create-session',passport.authenticate(
 ),userController.createSession);
 
 
-
-
+route.get('/auth/google',passport.authenticate('google',{scope:['profile','email']}));
+route.get('/auth/google/callback',passport.authenticate('google',{failureRedirect:'/user/sign-in'}),userController.createSession);
 route.get('/sign-out',userController.destroySession);
 module.exports=route;

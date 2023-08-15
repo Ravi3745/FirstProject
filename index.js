@@ -23,6 +23,17 @@ const customMware = require('./config/middleware');
 
 const nodemailer = require("nodemailer");
 
+const chatServer=require('http').Server(app);
+const chatSockets=require('./config/chat_sockets').chatSockets(chatServer);
+
+chatServer.listen(8000, function (error) {
+    if (error) {
+      console.log("Error in setting up Chat Server");
+    } else {
+      console.log("Chat Server is listening on port 8000");
+    }
+  });
+
 app.use(
     sassMiddleware({
       src: path.join(__dirname, 'assets', 'scss'), // Path to your SCSS files

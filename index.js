@@ -4,6 +4,7 @@ const app=express();
 const port=5000;
 const path=require('path');
 const mime=require('mime');
+const env = require('./config/environment');
 // data base
 const db=require('./config/mongoose');
 // cookies 
@@ -58,7 +59,7 @@ app.set('views','./views')
 app.use(session({
     name:'codeial',
     // change secret before deplyoment
-    secret:'something',
+    secret: env.session_cookie_key,
     resave:false,
     saveUninitialized:false,
     cookie:{
@@ -83,7 +84,8 @@ app.use(passport.setAuthenticatedUser);
 app.use(flash());
 app.use(customMware.setFlash);
   
-app.use(express.static('./assets')); 
+// app.use(express.static('./assets'));
+app.use(express.static(env.asset_path)); 
 // make upaoad folder availble to the browser
 app.use('/uploads',express.static(__dirname+'/uploads'));
 

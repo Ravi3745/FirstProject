@@ -1,22 +1,10 @@
 const nodemailer=require('nodemailer');
 const ejs=require('ejs');
 const path=require('path');
+const env = require('./environment');
 
 
-const transporter = nodemailer.createTransport({
-    service:'gmail',
-    host: "smtp.gmail.com",
-    port: 465,
-    secure: true,
-    auth: {
-      
-      user: 'Shivrk3745',
-      pass: 'ndqtlcpiizaugzul'
-    }
-  });
-
-
-
+let transporter = nodemailer.createTransport(env.smtp);
  const renderTemplate=(data,relativePath)=>{
     let mailHTML;
     ejs.renderFile(
